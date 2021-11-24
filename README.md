@@ -19,3 +19,9 @@ samples, guidance on mobile development, and a full API reference.
 <div align="center">
   <img src="/ss/img1.jpeg"/>
   </div>
+  <div align="center">
+  <img src="/ss/img2.jpeg"/>
+  </div>
+  <div align="center">
+  <img src="/ss/img3.jpeg"/>
+  </div>
