@@ -17,5 +17,5 @@ samples, guidance on mobile development, and a full API reference.
 
 ## Screenshots
 <div align="center">
-  <img src="/ss/img1.png"/>
+  <img src="/ss/img1.jpeg"/>
   </div>
