@@ -17,8 +17,8 @@ samples, guidance on mobile development, and a full API reference.
 
 ## Screenshots
 <div align="center">
-  <img src="/ss/img1.jpeg" width="400px" height="700"/>
   <img src="/ss/img2.jpeg" width="400px" height="700"/>
+  <img src="/ss/img1.jpeg" width="400px" height="700"/>
   <img src="/ss/img3.jpeg" width="400px" height="700"/>
  </div>
   
