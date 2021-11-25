@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/src/provider.dart';
 import 'package:weather_app/core/models/get_weather.dart';
 import 'package:weather_app/core/viewmodel/location.dart';
+import 'package:weather_app/ui/pages/details.dart';
 
 class NotificationModal extends StatelessWidget {
   GetWeather notificationData;
@@ -11,7 +12,7 @@ class NotificationModal extends StatelessWidget {
       : super(key: key);
 
        
-       late LocationProvider _locationProvider;
+      late LocationProvider _locationProvider;
 
   @override
   Widget build(BuildContext context) {
@@ -65,34 +66,41 @@ class NotificationModal extends StatelessWidget {
                 itemBuilder: (BuildContext context, int index) {
                  final message =  weatherData!.list![index].weather!.map((e) => (e.description)).toList().join(", ");
                  final date = DateTime.now().add(Duration(days: index)).toString().substring(0, 10);
-                  return Row(
-                  children: [
-                    FaIcon(FontAwesomeIcons.cloudSunRain,
-                        color: Color(0xffFA9E42)),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                         date,
-                          style: TextStyle(
-                              fontSize: 10, fontWeight: FontWeight.w400),
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Text(
-                          message),
-                      ],
-                    ),
-                  ],
-                );},
+                 final cityName = weatherData.city;
+                  return GestureDetector(
+                    onTap: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>DetailScreen(weatherData: weatherData.list![index], cityName: cityName!.name)));
+                    },
+                    child: Row(
+                    children: [
+                      FaIcon(FontAwesomeIcons.cloudSunRain,
+                          color: Color(0xffFA9E42)),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                           date,
+                            style: TextStyle(
+                                fontSize: 10, fontWeight: FontWeight.w400),
+                          ),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Text(
+                            message),
+                        ],
+                      ),
+                    ],
+                                  ),
+                  );},
                 itemCount: weatherData!.list!.length,
                 separatorBuilder: (BuildContext context, int index) =>
                     Divider(height: 40),
                 shrinkWrap: true,
+
                 physics: NeverScrollableScrollPhysics(),
               )
             ],

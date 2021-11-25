@@ -14,7 +14,7 @@ class LocationProvider extends ChangeNotifier{
    GetWeather? get weatherData=> _weatherData;
 
   Future getUserLocation() async{
-  Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.low);
+  Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
 
   
   _currentLongitude = position.longitude;
@@ -26,8 +26,14 @@ class LocationProvider extends ChangeNotifier{
 final _result = await getWeatherData(currentLatitude: _currentLatitude!, currentLongitude: _currentLongitude!);
 _weatherData = _result;
 notifyListeners();
+
+// final _Cityresult = await getCityWeather("CityName");
+// _weatherData = _Cityresult;
+// notifyListeners();
   
   }   
+
+ 
 
   Future<GetWeather> getWeatherData({required double currentLatitude, required double currentLongitude}) async{
      final response = await http.get(
@@ -36,4 +42,17 @@ notifyListeners();
       return _getWeather;
 
   }
+
+
+   Future getCityWeather(String cityName) async{
+    final response = await http.get(
+      Uri.parse("https://api.openweathermap.org/data/2.5/forecast/daily?q=$cityName&cnt=5&appid=542ffd081e67f4512b705f89d2a611b2")
+    );
+    print(response.body);
+    _weatherData = getWeatherFromJson(response.body);
+    notifyListeners();
+  }
+
+   
 }
+
