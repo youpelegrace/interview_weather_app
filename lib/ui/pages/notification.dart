@@ -11,13 +11,12 @@ class NotificationModal extends StatelessWidget {
   NotificationModal({Key? key, required this.notificationData})
       : super(key: key);
 
-       
-      late LocationProvider _locationProvider;
+  late LocationProvider _locationProvider;
 
   @override
   Widget build(BuildContext context) {
-     _locationProvider = context.read<LocationProvider>();
-     final weatherData = _locationProvider.weatherData;
+    _locationProvider = context.read<LocationProvider>();
+    final weatherData = _locationProvider.weatherData;
     return SafeArea(
       child: SizedBox(
         child: Padding(
@@ -64,43 +63,55 @@ class NotificationModal extends StatelessWidget {
               ),
               ListView.separated(
                 itemBuilder: (BuildContext context, int index) {
-                 final message =  weatherData!.list![index].weather!.map((e) => (e.description)).toList().join(", ");
-                 final date = DateTime.now().add(Duration(days: index)).toString().substring(0, 10);
-                 final cityName = weatherData.city;
+                  final message = weatherData!.list![index].weather!
+                      .map((e) => (e.description))
+                      .toList()
+                      .join(", ");
+                  final date = DateTime.now()
+                      .add(Duration(days: index))
+                      .toString()
+                      .substring(0, 10);
+                  final cityName = weatherData.city;
                   return GestureDetector(
-                    onTap: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>DetailScreen(weatherData: weatherData.list![index], cityName: cityName!.name)));
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => DetailScreen(
+                              weatherData: weatherData.list![index],
+                              cityName: cityName!.name),
+                        ),
+                      );
                     },
                     child: Row(
-                    children: [
-                      FaIcon(FontAwesomeIcons.cloudSunRain,
-                          color: Color(0xffFA9E42)),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                           date,
-                            style: TextStyle(
-                                fontSize: 10, fontWeight: FontWeight.w400),
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Text(
-                            message),
-                        ],
-                      ),
-                    ],
-                                  ),
-                  );},
+                      children: [
+                        FaIcon(FontAwesomeIcons.cloudSunRain,
+                            color: Color(0xffFA9E42)),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              date,
+                              style: TextStyle(
+                                  fontSize: 10, fontWeight: FontWeight.w400),
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            Text(message),
+                          ],
+                        ),
+                      ],
+                    ),
+                  );
+                },
                 itemCount: weatherData!.list!.length,
                 separatorBuilder: (BuildContext context, int index) =>
                     Divider(height: 40),
                 shrinkWrap: true,
-
                 physics: NeverScrollableScrollPhysics(),
               )
             ],
