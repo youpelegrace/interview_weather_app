@@ -4,7 +4,9 @@ import 'package:flutter_svg/svg.dart';
 
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/src/provider.dart';
 import 'package:weather_app/core/models/get_weather.dart';
+import 'package:weather_app/core/viewmodel/location.dart';
 
 class DailyReadings extends StatelessWidget {
    GetWeather? weatherData;
@@ -13,10 +15,13 @@ class DailyReadings extends StatelessWidget {
  required this.weatherData,
   }) : super(key: key);
 
-  
+       late LocationProvider _locationProvider;
+
 
   @override
   Widget build(BuildContext context) {
+            _locationProvider = context.watch<LocationProvider>();
+
     return Container(
       height: 348,
       width: MediaQuery.of(context).size.width,
@@ -61,13 +66,13 @@ class DailyReadings extends StatelessWidget {
            Text((dynamic temp){
               final celcius = (temp /10).toStringAsFixed(1);
                return '${celcius.toString()}${"\u00B0"}';
-           }(weatherData?.list![0].temp?.day),
+           }(_locationProvider.weatherData?.list![0].temp?.day),
              style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.w500,
                       fontSize: 111
                     ),),
-           Text("${weatherData?.city?.name  } - ${DateTime.now().hour.toString()}:${DateTime.now().minute.toString()} am",
+           Text("${_locationProvider.weatherData?.city?.name  } - ${DateTime.now().hour.toString()}:${DateTime.now().minute.toString()} am",
              style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.w500,

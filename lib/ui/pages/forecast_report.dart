@@ -1,15 +1,21 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/src/provider.dart';
 import 'package:weather_app/core/models/get_weather.dart';
+import 'package:weather_app/core/viewmodel/location.dart';
 
 class ForecastReport extends StatelessWidget {
   GetWeather? weather;
   ForecastReport({Key? key, this.weather}) : super(key: key);
+         late LocationProvider _locationProvider;
+
 
   @override
   Widget build(BuildContext context) {
-    final list = weather?.list;
+                _locationProvider = context.watch<LocationProvider>();
+
+    final list = _locationProvider.weatherData!.list;
    
     return SafeArea(
       child: SizedBox(
