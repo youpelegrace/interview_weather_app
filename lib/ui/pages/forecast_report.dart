@@ -8,15 +8,14 @@ import 'package:weather_app/core/viewmodel/location.dart';
 class ForecastReport extends StatelessWidget {
   GetWeather? weather;
   ForecastReport({Key? key, this.weather}) : super(key: key);
-         late LocationProvider _locationProvider;
-
+  late LocationProvider _locationProvider;
 
   @override
   Widget build(BuildContext context) {
-                _locationProvider = context.watch<LocationProvider>();
+    _locationProvider = context.watch<LocationProvider>();
 
     final list = _locationProvider.weatherData!.list;
-   
+
     return SafeArea(
       child: SizedBox(
         child: Padding(
@@ -86,7 +85,8 @@ class ForecastReport extends StatelessWidget {
                       child: ListView.separated(
                         scrollDirection: Axis.horizontal,
                         itemCount: 5,
-                        itemBuilder: (context, index) =>  HourlyReport(listElement: list![index], index:index),
+                        itemBuilder: (context, index) => HourlyReport(
+                            listElement: list![index], index: index),
                         separatorBuilder: (BuildContext context, int index) =>
                             const SizedBox(
                           width: 40,
@@ -101,7 +101,7 @@ class ForecastReport extends StatelessWidget {
               height: 40,
             ),
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-            const  Text(
+              const Text(
                 "Next forecast ",
                 style: TextStyle(fontSize: 22, fontWeight: FontWeight.w700),
               ),
@@ -119,7 +119,7 @@ class ForecastReport extends StatelessWidget {
                 ),
               ),
             ]),
-           const SizedBox(
+            const SizedBox(
               height: 15,
             ),
             Container(
@@ -132,8 +132,8 @@ class ForecastReport extends StatelessWidget {
                   ),
                   borderRadius: BorderRadius.circular(16)),
               child: Wrap(
-                children: 
-                  [Column(
+                children: [
+                  Column(
                     //  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Padding(
@@ -143,9 +143,11 @@ class ForecastReport extends StatelessWidget {
                           width: MediaQuery.of(context).size.width,
                           child: ListView.separated(
                             itemCount: list!.length,
-                            itemBuilder: (context, index) =>  DailyReport(listElement: list[index], index:index),
-                            separatorBuilder: (BuildContext context, int index) =>
-                                const Divider(
+                            itemBuilder: (context, index) => DailyReport(
+                                listElement: list[index], index: index),
+                            separatorBuilder:
+                                (BuildContext context, int index) =>
+                                    const Divider(
                               height: 20,
                             ),
                           ),
@@ -166,27 +168,31 @@ class ForecastReport extends StatelessWidget {
 class DailyReport extends StatelessWidget {
   ListElement listElement;
   int index;
-   DailyReport({
-    Key? key, required this.listElement, required this.index,
+  DailyReport({
+    Key? key,
+    required this.listElement,
+    required this.index,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children:  [
+      children: [
         Text(
-          "${DateTime.now().add(Duration(days:index)).toString().substring(0,10)}",
-          style: TextStyle(
-              fontSize: 12, fontWeight: FontWeight.w400),
+          "${DateTime.now().add(Duration(days: index)).toString().substring(0, 10)}",
+          style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
         ),
-       FaIcon(FontAwesomeIcons.cloud, color: Color(0xffFA9E42),),
-         Text((dynamic temp){
-                        final celcius = (temp /10).toStringAsFixed(1);
+        FaIcon(
+          FontAwesomeIcons.cloud,
+          color: Color(0xffFA9E42),
+        ),
+        Text(
+          (dynamic temp) {
+            final celcius = (temp / 10).toStringAsFixed(1);
 
-          return "${celcius.toString()}${ "\u00B0"}";
-        }(listElement.temp!.day)
-          ,
+            return "${celcius.toString()}${"\u00B0"}";
+          }(listElement.temp!.day),
           style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
         ),
       ],
@@ -195,33 +201,30 @@ class DailyReport extends StatelessWidget {
 }
 
 class HourlyReport extends StatelessWidget {
-   ListElement listElement;
+  ListElement listElement;
   int index;
-   HourlyReport({
-    Key? key, required this.index, required this.listElement
-  }) : super(key: key);
+  HourlyReport({Key? key, required this.index, required this.listElement})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        Text((dynamic temp){
-                        final celcius = (temp /10).toStringAsFixed(1);
+        Text(
+          (dynamic temp) {
+            final celcius = (temp / 10).toStringAsFixed(1);
 
-          return "${celcius.toString()}${ "\u00B0"}";
-        }(listElement.temp!.day)
-          ,
+            return "${celcius.toString()}${"\u00B0"}";
+          }(listElement.temp!.day),
           style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
         ),
         FaIcon(FontAwesomeIcons.cloudSunRain, color: Color(0xffFA9E42)),
         Text(
-          "${DateTime.now().add(Duration(days:index)).toString().substring(0,10)}",
+          "${DateTime.now().add(Duration(days: index)).toString().substring(0, 10)}",
           style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
         )
       ],
     );
   }
 }
-
-

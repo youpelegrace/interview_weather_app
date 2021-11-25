@@ -4,9 +4,7 @@ import 'package:weather_app/ui/pages/forecast_report.dart';
 
 class BottomTap extends StatelessWidget {
   GetWeather? weather;
-   BottomTap({
-    Key? key, this.weather
-  }) : super(key: key);
+  BottomTap({Key? key, this.weather}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
